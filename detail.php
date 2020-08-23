@@ -1,3 +1,70 @@
+<?php
+
+    require_once 'vendor/autoload.php';
+
+    MercadoPago\SDK::setAccessToken("APP_USR-6317427424180639-042414-47e969706991d3a442922b0702a0da44-469485398");
+    MercadoPago\SDK::setIntegratorId("dev_24c65fb163bf11ea96500242ac130004");
+
+    
+
+    // Crea un ítem en la preferencia
+    $item = new MercadoPago\Item();
+    $item->id = "1234";
+    $item->title = $_POST['title'];
+    $item->description = "Dispositivo móvil de Tienda e-commerce";
+    $item->picture_url = $_SERVER['HTTP_HOST'].$_POST['img'];
+    $item->quantity = 1;
+    $item->unit_price = floatval($_POST['price']);
+
+
+    
+
+    // Creo un objeto de comprador (payer)
+    $payer = array(
+        "name" => "Lalo",
+        "surname" => "Landa",
+        "email" => "test_user_63274575@testuser.com",
+        "phone" => (object)array(
+            "area_code" => "11",
+            "number" => "22223333"
+        ),
+        "address" => (object)array(
+            "street_name" => "False",
+            "street_number" => 123,
+            "zip_code" => "1111"
+        )
+    );
+
+    //Creo un objeto de payment methods
+    $payment = array(
+        "excluded_payment_methods" => array(
+            (object)array(
+                "id" => "amex" )            
+        ),
+        "excluded_payment_types" => array(
+            (object)array(
+                "id" => "atm" )
+        ),
+        "installments" => 6
+    );
+
+    // echo "<pre>";
+    // print_r((object)$payment);
+    // echo "</pre>"; 
+    // die();
+
+    // Crea un objeto de preferencia
+    $preference = new MercadoPago\Preference();
+
+    $preference->items = array($item);
+    $preference->payer = (object)$payer;
+    $preference->payment_methods = (object)$payment;
+    $preference->external_reference = 'lugovlac@gmail.com';
+
+    $preference->save();
+
+?>
+
 <!DOCTYPE html>
 <html class="supports-animation supports-columns svg no-touch no-ie no-oldie no-ios supports-backdrop-filter as-mouseuser" lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     
@@ -124,13 +191,21 @@
                                             </h3>
                                         </div>
                                         <h3 >
-                                            <?php echo $_POST['price'] ?>
+                                            <?php echo "$" .$_POST['price'] ?>
                                         </h3>
                                         <h3 >
-                                            <?php echo "$" . $_POST['unit'] ?>
+                                            <?php echo $_POST['unit'] ?>
                                         </h3>
                                     </div>
-                                    <button type="submit" class="mercadopago-button" formmethod="post">Pagar</button>
+                                    <!--<form action="/procesar-pago" method="POST">
+                                        <script src="https://www.mercadopago.com.ar/integrations/v1/web-payment-checkout.js"
+                                       data-preference-id="<?php echo $preference->id; ?>">
+                                        </script>
+                                    </form>-->
+                                    <form action="<?=$preference->init_point?>" method="POST">
+                                        <button type="submit" class="mercadopago-button" formmethod="post">Pagar la compra</button>
+                                    </form>
+                                    
                                 </div>
                             </div>
                         </div>
