@@ -1,4 +1,6 @@
 <?php
+	http_response_code(200);
+	
 	$webhTxt = "webhook.txt";
 	$data = "Hola hola hola hola";
 	file_put_contents($webhTxt, $data);
