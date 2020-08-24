@@ -62,7 +62,7 @@
         "failure" => $_SERVER['HTTP_HOST']."/failure.php"
     );
     $preference->auto_return = "approved";
-    $preference->notification_url = $_SERVER['HTTP_HOST']."/webhook.php";
+    $preference->notification_url = $_SERVER['HTTP_HOST']."/webhook.php?source_news=webhooks";
 
     $preference->save();
 
