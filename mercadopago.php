@@ -63,7 +63,7 @@
     );
     $preference->auto_return = "approved";
     $preference->notification_url = $_SERVER['HTTP_HOST']."/webhook.php?source_news=webhooks";
-    
+    $preference->collector_id = 469485398;
 
     $preference->save();
 
