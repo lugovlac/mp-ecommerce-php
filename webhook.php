@@ -2,8 +2,8 @@
 	http_response_code(200);
 
 	$webhTxt = "webhook.txt";
-	$data = "CAMBIO ESTO DE NUEVO HABER";
-	file_put_contents($webhTxt, $data);
+	$json = file_get_contents('php://input');
+	file_put_contents($webhTxt, $json);
 	// require_once 'vendor/autoload.php';
 
  //    MercadoPago\SDK::setAccessToken("APP_USR-6317427424180639-042414-47e969706991d3a442922b0702a0da44-469485398");
