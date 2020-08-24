@@ -2,7 +2,7 @@
 	http_response_code(200);
 
 	$webhTxt = "webhook.txt";
-	$data = "hola hola hola ohla hola holahola"
+	$data = "hola hola hola ohla hola holahola";
 	$json = file_get_contents('php://input');
 	file_put_contents($webhTxt, $data);
 	// require_once 'vendor/autoload.php';
